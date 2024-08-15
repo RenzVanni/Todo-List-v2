@@ -1,7 +1,7 @@
-import LoginAndRegister from "./components/LoginAndRegister";
+import Login from "./components/Login";
 
 const App = () => {
-  return <LoginAndRegister />;
+  return <Login />;
 };
 
 export default App;

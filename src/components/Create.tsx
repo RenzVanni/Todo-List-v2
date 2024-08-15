@@ -1,13 +1,13 @@
-import React from "react";
-
 const Create = () => {
+  console.log(JSON.parse(localStorage.getItem("data") || ""));
+  
   return (
-    <div className="w-4/5 h-4/5">
-      <form action="" className="flex flex-col flex-1 h-full">
+    <div className="w-4/5 h-4/5 overflow-y-scroll">
+      <form action="" className="flex flex-col h-full">
         <input
           type="text"
           placeholder="Untitled"
-          className="bg-transparent w-full outline-none text-5xl text-text"
+          className="bg-transparent w-full outline-none placeholder:text-text text-5xl text-text"
         />
         <textarea
           name=""

@@ -1,18 +1,71 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { MainContext } from "../lib/global-context";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserProp } from "../constants/types";
 
 const Form = () => {
-  const { form, setForm } = useContext(MainContext);
-  const [Login, setLogin] = useState(false);
+  const { form, setForm, setApiData } = useContext(MainContext);
   const navigate = useNavigate();
+  const [user, setUser] = useState<UserProp>({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+  });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (form) {
-      navigate("/Home");
+    console.log(user);
+
+    try {
+      if (form) {
+        await axios
+          .post("http://localhost:3000/", {
+            email: user.email,
+            password: user.password,
+          })
+          .then((response) => {
+            setApiData(response.data);
+            localStorage.setItem("data", JSON.stringify(response.data));
+            navigate("/Home");
+          })
+          .catch((error) => console.log(error));
+      } else {
+        await axios
+          .post("http://localhost:3000/Register", {
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            password: user.password,
+          })
+          .then((response) => {
+            console.log(response);
+            setForm(true);
+            navigate("/");
+          })
+          .catch((error) => console.log(error));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  const handleChangeForm = (value: boolean) => {
+    console.log("click ", form);
+    setForm(value);
+
+    if (value) {
+      console.log("true", form);
+      navigate("/");
+      setUser({ firstname: "", lastname: "", email: "", password: "" });
+    } else {
+      console.log("false", form);
+      navigate("/Register");
+      setUser({ firstname: "", lastname: "", email: "", password: "" });
+    }
+  };
+
   return (
     <div className=" w-full p-16">
       <h1 className="font-bold text-3xl mb-4">
@@ -22,8 +75,8 @@ const Form = () => {
         <p className="flex gap-x-2">
           Create an account?
           <span
-            onClick={() => setForm((prev) => !prev)}
-            className="text-text font-semibold underline mb-8"
+            onClick={() => handleChangeForm(false)}
+            className="text-text font-semibold underline mb-8 cursor-pointer"
           >
             Create an account
           </span>
@@ -32,44 +85,55 @@ const Form = () => {
         <p className="flex gap-x-2">
           Already have an account?
           <span
-            onClick={() => setForm((prev) => !prev)}
-            className="text-text font-semibold underline mb-8"
+            onClick={() => handleChangeForm(true)}
+            className="text-text font-semibold underline mb-8 cursor-pointer"
           >
             Login
           </span>
         </p>
       )}
 
-      <form action="" className="flex flex-col gap-4">
+      <form action="" onSubmit={handleSubmit} className="flex flex-col gap-4">
         {!form ? (
           <div className="flex flex-1 gap-4">
             <input
               type="text"
               placeholder="First name"
-              className="bg-background flex-1 px-4 py-2 rounded-md outline-none border-none"
+              className="bg-background text-text flex-1 px-4 py-2 rounded-md outline-none border-none placeholder:text-text"
+              onChange={(e) =>
+                setUser((prev) => ({ ...prev, firstname: e.target.value }))
+              }
             />
             <input
               type="text"
               placeholder="Last name"
-              className="bg-background flex-1 px-4 py-2 rounded-md outline-none border-none"
+              className="bg-background text-text flex-1 px-4 py-2 rounded-md outline-none border-none placeholder:text-text"
+              onChange={(e) =>
+                setUser((prev) => ({ ...prev, lastname: e.target.value }))
+              }
             />
           </div>
         ) : null}
         <input
           type="text"
           placeholder="Email"
-          className="bg-background flex-1 px-4 py-2 rounded-md outline-none border-none"
+          className="bg-background text-text flex-1 px-4 py-2 rounded-md outline-none border-none placeholder:text-text"
+          onChange={(e) =>
+            setUser((prev) => ({ ...prev, email: e.target.value }))
+          }
         />
         <input
           type="password"
           placeholder="Password"
-          className="bg-background flex-1 px-4 py-2 rounded-md outline-none border-none"
+          className="bg-background text-text flex-1 px-4 py-2 rounded-md outline-none border-none placeholder:text-text"
+          onChange={(e) =>
+            setUser((prev) => ({ ...prev, password: e.target.value }))
+          }
         />
 
         <button
-          type="button"
+          type="submit"
           className="bg-button text-text px-4 py-2 rounded-md"
-          onClick={handleSubmit}
         >
           Login
         </button>

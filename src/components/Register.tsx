@@ -1,8 +1,7 @@
-import Lottie from "react-lottie-player";
-import lottieImage from "../assets/login.json";
-import Form from "./Form";
 import TodoImage from "/images/todo-02.jpeg";
-const LoginAndRegister = () => {
+import Form from "./Form";
+
+const Register = () => {
   return (
     <div>
       <div className="bg-background flex flex-1 justify-center items-center h-screen">
@@ -21,4 +20,4 @@ const LoginAndRegister = () => {
   );
 };
 
-export default LoginAndRegister;
+export default Register;
