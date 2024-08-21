@@ -3,8 +3,10 @@ import { MainContext } from "../lib/global-context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserProp } from "../constants/types";
+import useAxios from "../helpers/axios-interceptors";
 
 const Form = () => {
+  const api = useAxios();
   const { form, setForm, setApiData } = useContext(MainContext);
   const navigate = useNavigate();
   const [user, setUser] = useState<UserProp>({
@@ -16,35 +18,37 @@ const Form = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(user);
 
     try {
       if (form) {
-        await axios
-          .post("http://localhost:3000/", {
+        await api
+          .post("/", {
             email: user.email,
             password: user.password,
           })
-          .then((response) => {
-            setApiData(response.data);
-            localStorage.setItem("data", JSON.stringify(response.data));
-            navigate("/Home");
+          .then((res) => {
+            setApiData(res?.data);
+            localStorage.setItem("data", JSON.stringify(res?.data));
+            navigate("/Home/Dashboard");
           })
-          .catch((error) => console.log(error));
+          .catch((err) => {
+            console.log("error", err.message);
+          });
       } else {
-        await axios
-          .post("http://localhost:3000/Register", {
+        await api
+          .post("/Register", {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
             password: user.password,
           })
-          .then((response) => {
-            console.log(response);
+          .then((res) => {
             setForm(true);
             navigate("/");
           })
-          .catch((error) => console.log(error));
+          .catch((err) => {
+            console.log("error", err.message);
+          });
       }
     } catch (error) {
       console.log(error);

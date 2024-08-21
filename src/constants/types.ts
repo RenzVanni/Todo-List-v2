@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import React, { Dispatch, SetStateAction } from "react";
 
 //! Context Prop
@@ -20,4 +19,11 @@ export type UserProp = {
   lastname?: string;
   email: string;
   password: string;
+};
+
+//! Create
+export type CreateProp = {
+  id: string;
+  title: string;
+  context: string;
 };

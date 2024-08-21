@@ -6,6 +6,8 @@ import GlobalProvider from "./lib/global-context.tsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home.tsx";
 import Register from "./components/Register.tsx";
+import Create from "./components/Create.tsx";
+import Dashboard from "./components/Dashboard.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,11 @@ const router = createBrowserRouter([
   {
     path: "/Home",
     element: <Home />,
+    children: [
+      { path: "/Home/Dashboard", element: <Dashboard /> },
+      { path: "/Home/Create", element: <Create /> },
+      { path: "/Home/Create/:id", element: <Create /> },
+    ],
   },
 ]);
 

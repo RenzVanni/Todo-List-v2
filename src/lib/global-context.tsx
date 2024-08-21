@@ -1,6 +1,5 @@
 import { createContext, useState } from "react";
 import { ChildrenProp, GlobalContextProp } from "../constants/types";
-import { AxiosResponse } from "axios";
 
 const GlobalContextObj: GlobalContextProp = {
   form: true,
