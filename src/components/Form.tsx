@@ -42,11 +42,9 @@ const Form = () => {
             email: user.email,
             password: user.password,
           })
-          .then((res) => {
+          .then(() => {
             setForm(true);
-            if (res.data) {
-              navigate(INDEX);
-            }
+            navigate(INDEX);
           })
           .catch((err) => {
             console.log("error", err.message);
