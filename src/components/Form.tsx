@@ -44,7 +44,9 @@ const Form = () => {
           })
           .then((res) => {
             setForm(true);
-            navigate(INDEX);
+            if (res.data) {
+              navigate(INDEX);
+            }
           })
           .catch((err) => {
             console.log("error", err.message);
