@@ -1,11 +1,9 @@
-import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { MainContext } from "../lib/global-context";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchSpecificData } from "../auth/jwt-token";
-import { AxiosResponse } from "axios";
 import { CreateProp } from "../constants/types";
 import useAxios from "../helpers/axios-interceptors";
 import { useNavigate } from "react-router-dom";
+import { CREATE, DASHBOARD, HOME } from "../constants/url";
 
 const Create = () => {
   const api = useAxios();
@@ -22,7 +20,7 @@ const Create = () => {
       const response = async () => {
         try {
           await api
-            .get(`/Home/Create/${id}`)
+            .get(`${CREATE}/${id}`)
             .then((res) => {
               console.log(res?.data?.data?.id);
               const id = res?.data?.data?.id;
@@ -49,7 +47,7 @@ const Create = () => {
     event.preventDefault();
     if (id) {
       await api
-        .post("/Home", {
+        .post(HOME, {
           title,
           context,
           id: apiResponse?.id,
@@ -62,12 +60,13 @@ const Create = () => {
         });
     } else {
       await api
-        .post("/Home/Create", {
+        .post(CREATE, {
           title,
           context,
         })
         .then((res) => {
           console.log(res.data);
+          navigate(DASHBOARD);
         })
         .catch((err) => {
           console.log("error", err.message);
@@ -102,7 +101,10 @@ const Create = () => {
             }))
           }
         ></textarea>
-        <button type="submit" className="text-text py-2 hover:scale-100">
+        <button
+          type="submit"
+          className="text-text py-2 rounded-md hover:bg-background hover:scale-100"
+        >
           Send
         </button>
       </form>

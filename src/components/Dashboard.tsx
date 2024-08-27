@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiRequest from "../helpers/api-connection";
+import { CREATE, DASHBOARD } from "../constants/url";
 
 const Dashboard = () => {
   const [apiResponse, setApiResponse] = useState<any[]>([]);
@@ -9,7 +10,7 @@ const Dashboard = () => {
   useEffect(() => {
     const result = async () => {
       const response = await apiRequest({
-        params: "/Home/Dashboard",
+        params: DASHBOARD,
         request: {
           method: "GET",
         },
@@ -20,7 +21,7 @@ const Dashboard = () => {
   }, []);
 
   const handleNavigate = (id: number) => {
-    navigate(`/Home/Create/${id}`);
+    navigate(`${CREATE}/${id}`);
   };
 
   return (

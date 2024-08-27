@@ -7,7 +7,7 @@ const useAxios = () => {
   const { token, refreshToken } = parsedData;
 
   const api = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_BASEURL,
   });
 
   api.interceptors.request.use((config) => {
@@ -25,8 +25,6 @@ const useAxios = () => {
       const originalRequest = error?.config;
 
       if (error?.response?.status === 401 && !originalRequest?._retry) {
-        originalRequest._retry = true;
-
         try {
           const refreshResponse = await api.post("/refresh-token", {
             token: refreshToken,
@@ -40,6 +38,7 @@ const useAxios = () => {
             originalRequest.headers[
               "Authorization"
             ] = `Bearer ${refreshResponse?.data?.token}`;
+            originalRequest._retry = true;
 
             const newResponse = await api(originalRequest);
 

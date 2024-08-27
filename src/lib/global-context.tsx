@@ -15,7 +15,7 @@ export const MainContext = createContext(GlobalContextObj);
 const GlobalProvider = ({ children }: ChildrenProp) => {
   const [form, setForm] = useState(true);
   const [create, setCreate] = useState(false);
-  const [apiData, setApiData] = useState<any[]>([]);
+  const [apiData, setApiData] = useState<{}>({});
   return (
     <MainContext.Provider
       value={{ form, setForm, create, setCreate, apiData, setApiData }}

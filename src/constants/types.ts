@@ -9,8 +9,8 @@ export type GlobalContextProp = {
   setForm: Dispatch<SetStateAction<boolean>>;
   create: boolean;
   setCreate: Dispatch<SetStateAction<boolean>>;
-  apiData: any[];
-  setApiData: Dispatch<SetStateAction<any[]>>;
+  apiData: any;
+  setApiData: Dispatch<SetStateAction<{}>>;
 };
 
 //! Form Prop

@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { MainContext } from "../lib/global-context";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { UserProp } from "../constants/types";
 import useAxios from "../helpers/axios-interceptors";
+import { DASHBOARD, INDEX, REGISTER } from "../constants/url";
 
 const Form = () => {
   const api = useAxios();
@@ -22,21 +22,21 @@ const Form = () => {
     try {
       if (form) {
         await api
-          .post("/", {
+          .post(INDEX, {
             email: user.email,
             password: user.password,
           })
           .then((res) => {
-            setApiData(res?.data);
+            setApiData(res?.data?.user);
             localStorage.setItem("data", JSON.stringify(res?.data));
-            navigate("/Home/Dashboard");
+            navigate(DASHBOARD);
           })
           .catch((err) => {
             console.log("error", err.message);
           });
       } else {
         await api
-          .post("/Register", {
+          .post(REGISTER, {
             firstname: user.firstname,
             lastname: user.lastname,
             email: user.email,
@@ -44,7 +44,7 @@ const Form = () => {
           })
           .then((res) => {
             setForm(true);
-            navigate("/");
+            navigate(INDEX);
           })
           .catch((err) => {
             console.log("error", err.message);
@@ -61,11 +61,11 @@ const Form = () => {
 
     if (value) {
       console.log("true", form);
-      navigate("/");
+      navigate(INDEX);
       setUser({ firstname: "", lastname: "", email: "", password: "" });
     } else {
       console.log("false", form);
-      navigate("/Register");
+      navigate(REGISTER);
       setUser({ firstname: "", lastname: "", email: "", password: "" });
     }
   };
