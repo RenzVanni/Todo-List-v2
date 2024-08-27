@@ -24,7 +24,7 @@ const useAxios = () => {
     async (error) => {
       const originalRequest = error?.config;
 
-      if (error?.response?.status === 401) {
+      if (error?.response?.status === 401 && !originalRequest?._retry) {
         try {
           const refreshResponse = await api.post("/refresh-token", {
             token: refreshToken,
