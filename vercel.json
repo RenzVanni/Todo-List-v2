@@ -1,9 +1,9 @@
 {
   "public": true,
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "https://todo-list-v2-api.vercel.app/"
+  "functions": {
+    "src/main.tsx": {
+      "memory": 1024,
+      "maxDuration": 30
     }
-  ]
+  }
 }
