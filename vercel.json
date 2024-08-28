@@ -1,3 +1,13 @@
 {
-  "public": true
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://todo-list-v2-api.vercel.app/"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
