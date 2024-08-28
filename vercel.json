@@ -5,6 +5,10 @@
     {
       "source": "/api/(.*)",
       "destination": "https://todo-list-v2-api.vercel.app/"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
