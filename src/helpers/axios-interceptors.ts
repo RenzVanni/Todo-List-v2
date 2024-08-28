@@ -7,7 +7,7 @@ const useAxios = () => {
   const { token, refreshToken } = parsedData;
 
   const api = axios.create({
-    baseURL: import.meta.env.BASEURL,
+    baseURL: import.meta.env.VITE_BASEURL,
   });
 
   api.interceptors.request.use((config) => {
