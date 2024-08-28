@@ -30,6 +30,7 @@ const Form = () => {
             setApiData(res?.data?.user);
             localStorage.setItem("data", JSON.stringify(res?.data));
             navigate(DASHBOARD);
+            console.log(res.data);
           })
           .catch((err) => {
             console.log("error", err.message);
