@@ -11,10 +11,7 @@ const useAxios = () => {
   });
 
   api.interceptors.request.use((config) => {
-    console.log(config.headers);
     if (token) {
-      console.log(config.headers.Authorization);
-
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
